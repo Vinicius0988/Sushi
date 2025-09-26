@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +23,11 @@ public class FoodController {
     @Autowired
     private FoodRepository repository; 
 
+    @CrossOrigin(origins = "*", allowedHeaders= "*")
     @PostMapping
     public void saveFood(@RequestBody FoodRequestDTO data){
         Food foodData = new Food(data);
         repository.save(foodData);
-
     }
 
     @GetMapping
@@ -34,6 +35,5 @@ public class FoodController {
 
         List<FoodResponseDTO> foodList = repository.findAll().stream().map(FoodResponseDTO::new).collect(Collectors.toList());
         return foodList;
-      
     }
 }
